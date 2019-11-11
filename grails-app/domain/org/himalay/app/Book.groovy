@@ -1,5 +1,6 @@
-package org.himalay.app;
+package org.himalay.app
 
+import org.spring.security.User;
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
@@ -13,6 +14,8 @@ class Book {
     String isbn
 
     String author
+
+    static belongsTo = [user: User]
 
     static constraints = {
         title blank: false

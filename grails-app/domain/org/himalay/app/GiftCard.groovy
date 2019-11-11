@@ -1,5 +1,6 @@
 package org.himalay.app
 
+import org.spring.security.User
 import io.swagger.annotations.ApiModelProperty
 
 class GiftCard {
@@ -14,7 +15,7 @@ class GiftCard {
     float amount
 
     String author
-
+    static belongsTo = [user: User]
     static constraints = {
         title blank: false
         isbn nullable: true

@@ -1,4 +1,7 @@
 grails {
+    dbconsole{
+        enabled = true
+    }
     plugin {
         springsecurity {
             rest {
@@ -13,16 +16,20 @@ grails {
             securityConfigType = "InterceptUrlMap"  // <1>
             filterChain {
                 chainMap = [
+                [pattern: '/api/v1/public/**', filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'],
                 [pattern: '/api/**',filters: 'JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'],// <2>
                 [pattern: '/**', filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'] // <3>
                 ]
             }
             userLookup {
-                userDomainClassName = 'example.grails.User' // <4>
-                authorityJoinClassName = 'example.grails.UserSecurityRole' // <4>
+                userDomainClassName = 'org.spring.security.User' // <4>
+                authorityJoinClassName = 'org.spring.security.UserSecurityRole' // <4>
             }
             authority {
-                className = 'example.grails.SecurityRole' // <4>
+                className = 'org.spring.security.SecurityRole' // <4>
+            }
+            successHandler {
+                defaultTargetUrl = '/operator/dashboard'
             }
             interceptUrlMap = [
                     [pattern: '/',                      access: ['permitAll']],
@@ -39,8 +46,10 @@ grails {
                     [pattern: '/apidoc',                access: ['permitAll']],
                     [pattern: '/login/**',              access: ['permitAll']], // <5>
                     [pattern: '/logout',                access: ['permitAll']],
+                    [pattern: '/register/*',            access: ['permitAll']],
                     [pattern: '/logout/**',             access: ['permitAll']],            
                     [pattern: '/*',                     access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER']],
+                    [pattern: '/operator/**',           access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER']],
                     [pattern: '/*/index',               access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER']],  // <6>
                     [pattern: '/*/create',              access: ['ROLE_ACCOUNTADMIN']],
                     [pattern: '/*/save',                access: ['ROLE_ACCOUNTADMIN']],
@@ -60,3 +69,26 @@ grails {
     }
 }
 
+swagger {
+    info {
+        description = "Move your app forward with the Swagger API Documentation"
+        version = "ttn-swagger-1.0.0"
+        title = "Swagger API"
+        termsOfServices = "http://swagger.io/"
+        contact {
+            name = "Contact Us"
+            url = "http://swagger.io"
+            email = "contact@gmail.com"
+        }
+        license {
+            name = "licence under http://www.evoke.com/"
+            url = ""
+        }
+    }
+    schemes = [io.swagger.models.Scheme.HTTPS]
+    consumes = ["application/json"]
+}
+
+grails.plugin.springsecurity.ui.register.requireEmailValidation = false
+grails.plugin.springsecurity.postRegisterURL.defaultTargetUrl = '/uerInfo/show/0'
+grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_ACCOUNTADMIN']

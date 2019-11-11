@@ -1,21 +1,19 @@
 package org.himalay.app
 
+import org.spring.security.User
 import grails.converters.JSON
 
 import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
-import grails.web.http.HttpHeaders
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import grails.plugin.springsecurity.annotation.Secured
 import static org.springframework.http.HttpStatus.*
-import org.himalay.auth.Roles
+import org.spring.security.Roles
 
 @Api(value = '/api/v1/book', description = 'Book resource', tags =['Book'])
 @Secured([Roles.ROLE_ACCOUNTADMIN, Roles.ROLE_ACCOUNTUSER])
@@ -297,4 +295,17 @@ class BookController extends RestfulController{
     }
 
 }
+class BookCmd{
+    String title
+    String isbn
+    String author
 
+    static belongsTo = [user: User]
+
+    static constraints = {
+        title blank: false
+        isbn nullable: true
+        author nullable: true
+    }
+
+}

@@ -4,18 +4,15 @@ import grails.converters.JSON
 
 import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
-import grails.web.http.HttpHeaders
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import grails.plugin.springsecurity.annotation.Secured
 import static org.springframework.http.HttpStatus.*
-import org.himalay.auth.Roles
+import org.spring.security.Roles
 
 @Api(value = '/api/v1/giftCard', description = 'GiftCard resource', tags =['GiftCard'])
 @Secured([Roles.ROLE_ACCOUNTADMIN, Roles.ROLE_ACCOUNTUSER])

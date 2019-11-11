@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 
-@Api(value = '/api/login', description = 'Bearer Token Creator', tags =['Authenticate'])
+@Api(value = '/api/v1/public/login', description = 'Bearer Token Creator', tags =['Authenticate'])
 class AuthenticateController {
     static allowedMethods = [index: "POST"]
     /**

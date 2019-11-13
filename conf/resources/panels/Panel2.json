@@ -1,0 +1,46 @@
+{
+  "layout":{
+    "title": "CPU over time real",
+    "autosize": true,
+    "margin": {
+      "l": 40,
+      "r": 40,
+      "t": 70,
+      "b": 50
+    },
+    "xaxis": {
+      "rangeselector": null,
+      "rangeslider": {}
+    }
+  },
+  "eg": "SELECT mean(\"usage_user\") AS \"mean_usage_user\", mean(\"usage_system\") AS \"mean_usage_system\" FROM \"telegraf\".\"autogen\".\"cpu\" WHERE time > :dashboardTime: GROUP BY time(:interval:) FILL(null)",
+  "columns":
+  {
+    "usage_user": {
+      "select": "mean(\"usage_user\") ",
+      "type": "scatter",
+      "mode": "lines",
+      "description": "User Load",
+      "displayName": "{{column.description}} {{tags.cpu}}"
+    },
+    "usage_iowait": {
+      "select": "mean(\"usage_iowait\") ",
+      "type": "scatter",
+      "mode": "lines",
+      "description": "User IO Wait",
+      "displayName": "{{column.description}} {{tags.cpu}}"
+    },
+    "usage_system": {
+      "select": "mean(\"usage_system\") ",
+      "type": "scatter",
+      "mode": "lines",
+      "description": "System Load",
+      "displayName": "{{column.description}} {{tags.cpu}}"
+    }
+  },
+  "from": "telegraf.autogen.cpu",
+  "where":"$__timeRange",
+  "groupBy_": ["$__interval"],
+  "groupBy": ["$__interval","cpu"],
+  "fill": "fill(null)"
+}

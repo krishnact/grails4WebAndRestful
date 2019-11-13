@@ -1,0 +1,39 @@
+{
+  "layout":{
+      "title": "CPU Load over time",
+      "autosize": true,
+    "margin": {
+      "l": 40,
+      "r": 40,
+      "t": 70,
+      "b": 50
+    },
+    "xaxis": {
+      "rangeselector": {},
+      "rangeslider": {}
+    }
+  },
+  "example": "SELECT mean(\"load1\") AS \"load1\", mean(\"load5\") AS \"load5\", mean(\"load15\") AS \"load15\" FROM \"telegraf\".\"autogen\".\"system\" WHERE time > :dashboardTime: AND \"host\" = :host: GROUP BY time(:interval:) FILL(null)",
+  "columns":
+    {
+      "load1": {
+        "select": "mean(\"load1\") ",
+        "type": "scatter",
+        "mode": "lines",
+        "description": "Mean Load 5",
+        "displayName": "{{column.description}} {{tags.host}}"
+      },
+      "load15": {
+        "select": "mean(\"load15\") ",
+        "type": "scatter",
+        "mode": "lines",
+        "description": "Mean Load 15",
+        "displayName": "{{column.description}} {{tags.host}}"
+      }
+    },
+  "from": "telegraf.autogen.system",
+  "where":"$__timeRange",
+  "groupBy_": ["$__interval"],
+  "groupBy": ["$__interval","host"],
+  "fill": "fill(null)"
+}

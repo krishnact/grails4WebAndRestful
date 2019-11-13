@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="SbtLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../../2017-IoTHub/PreConfiguredWebUI/azure-iot-pcs-remote-monitoring-java/telemetry" value="1510947334167" />
+        <entry key="$PROJECT_DIR$/../../2017-IoTHub/PreConfiguredWebUI/azure-iot-pcs-remote-monitoring-java/telemetry-agent" value="1510947338586" />
+      </map>
+    </option>
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+</project>

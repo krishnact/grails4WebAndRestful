@@ -1,4 +1,5 @@
 {
+  "plotType": "line",
   "layout":{
       "title": "CPU Load over time",
       "autosize": true,

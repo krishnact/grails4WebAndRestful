@@ -10,11 +10,16 @@
 %>
     <body>
         Panel count ${panels.size()}
-
+<div class="container-fluid">
+<div class="row">
 
         <g:each var="aPanel" in="${panels}">
-            <f:field property="panel" bean="${aPanel}"/>
+            <div class="col-xl-6 col-lg-7">
+            aPanel is of type ${aPanel.class} and contains ${aPanel.value.class}
+            <f:field property="value" bean="${aPanel}" templates="plot"/>
+            </div>
         </g:each>
-
+</div>
+</div>
 </body>
 </html>

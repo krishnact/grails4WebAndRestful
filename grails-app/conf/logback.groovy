@@ -38,3 +38,4 @@ root(ERROR, ['STDOUT'])
 
 logger("grails.plugin.springsecurity", TRACE)
 logger("org.grails.web", TRACE)
+logger('grails.plugin.formfields.FormFieldsTemplateService', DEBUG,['STDOUT'])

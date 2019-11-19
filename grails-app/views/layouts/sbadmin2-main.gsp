@@ -367,8 +367,9 @@
 
 <!-- Custom scripts for all pages-->
 <asset:javascript src="/currentTheme/js/sb-admin-2.min.js"></asset:javascript>
-<asset:javascript src="mustache.min.js"></asset:javascript>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<asset:javascript src="mustache.min.js"></asset:javascript>
+<asset:javascript src="/plot/Plot.ts"></asset:javascript>
 </body>
 
 </html>

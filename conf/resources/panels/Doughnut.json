@@ -1,0 +1,15 @@
+{
+  "plotType": "pie",
+  "layout":"file://template.Doughnut.html",
+  "selectQuery": "SELECT sum(\"usage_system\") as \"cpuUsage\" FROM \"autogen\".\"cpu\" WHERE (\"cpu\" != 'cpu-total') AND $__timeRange GROUP BY \"cpu\"",
+  "columns":
+    {
+      "cpuUsage": {
+        "hole": 0.4,
+        "select": "",
+        "description": "CPU usage",
+        "displayName": "{{column.description}} {{tags.cpu}}",
+        "marker": {"line": {"width": 10}}
+      }
+    }
+}

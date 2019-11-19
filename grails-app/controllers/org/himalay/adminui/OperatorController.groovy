@@ -9,18 +9,40 @@ class OperatorController {
 
     def dashboard(){
         //String id = 'Panel1'
-        List<Bean> panels = (1..2).collect { int id->
-            String panelFileName = "Panel${id}"
-            return new Bean<Plot>(new Plot("conf/resources/panels/${panelFileName}.json"));
+        File plots = new File('conf/resources/panels/')
+        def files = ['Doughnut.json','Panel1.json'].collect{
+            new File(plots, it)
         }
+//        def files = plots.listFiles().findAll{
+//            it.name.endsWith('.json') and it.name.startsWith('D')
+//        }
+        def panels = files.collect{
+            new Bean<Plot>(new Plot(it))
+        }
+
+
+        respond "dashboard", model: [
+                panels: panels,
+                //panelJSON: new JsonBuilder(panel.panelDef).toPrettyString().encodeAsBase64(),
+                //influxQuery: panel.influxQuery().encodeAsBase64()
+        ]
+    }
+
+    def dashboard_good(){
+        //String id = 'Panel1'
+        File plots = new File('conf/resources/panels/')
+        def panels = plots.listFiles().findAll{
+            it.name.endsWith('.json')
+        }.collect{
+            new Bean<Plot>(new Plot(it))
+        }
+
+
         respond "dashboard", model: [
                                 panels: panels,
                                 //panelJSON: new JsonBuilder(panel.panelDef).toPrettyString().encodeAsBase64(),
                                 //influxQuery: panel.influxQuery().encodeAsBase64()
                         ]
-
-
-        //respond 'dashboard', model:[:]
     }
 }
 

@@ -20,6 +20,8 @@ class User implements Serializable {
 	Date lastUpdate = Constants.NULL_DATE;
 	Date signupDate = Constants.NULL_DATE;
 
+	static hasMany = [oAuthIDs: OAuthID]
+
 	Set<SecurityRole> getAuthorities() {
 		(UserSecurityRole.findAllByUser(this) as List<UserSecurityRole>)*.securityRole as Set<SecurityRole>
 	}
@@ -29,6 +31,7 @@ class User implements Serializable {
 		username blank: false, unique: true
 		account nullable: true
 	}
+
 
 	def beforeInsert() {
 

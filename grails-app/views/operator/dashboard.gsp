@@ -13,12 +13,11 @@
 <div class="container-fluid">
 <div class="row">
 
-        <g:each var="aPanel" in="${panels}">
+        <!--g:each var="aPanel" in="${panels}"-->
             <div class="col-xl-6 col-lg-7">
-            aPanel is of type ${aPanel.class} and contains ${aPanel.value.class}
-            <f:field property="value" bean="${aPanel}" templates="plot"/>
+            <f:field property="value" bean="${panels['Doughnut.json']}" templates="plot"/>
             </div>
-        </g:each>
+        <!--/g:each  -->
 </div>
 </div>
 </body>

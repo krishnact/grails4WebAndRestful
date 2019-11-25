@@ -74,10 +74,15 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.4.0.Final"
     compile "org.grails.plugins:views-markup"
     implementation 'com.bertramlabs.plugins:typescript-asset-pipeline:3.0.10'
+    implementation 'org.jsoup:jsoup:1.12.1'
     compileOnly "io.micronaut:micronaut-inject-groovy"
     compile group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
     compile group: 'io.swagger', name: 'swagger-servlet', version: "${swaggerVersion}"
     compile "org.webjars:swagger-ui:${swaggerUIVersion}"
+    //compile 'org.grails.plugins:spring-security:3.+'
+    //compile 'org.grails.plugins:spring-security-oauth2:1.4.0'
+    compile 'org.grails.plugins:spring-security-oauth2-facebook:1.4.1'
+    compile group: 'org.mozilla', name: 'rhino', version: '1.7.11'
     // tag::dependencySSR[]
     // end::dependencySSR[]
     compile 'org.grails.plugins:swagger:1.0.1'

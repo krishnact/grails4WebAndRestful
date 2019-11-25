@@ -13,6 +13,14 @@ grails {
                     }
                 }
             }
+            oauth2{
+                active =  true    //#whether the whole plugin is active or not
+                registration {
+                    askToLinkOrCreateAccountUri = '/oauth2/ask' //# The URI that is called to aks the user to either create a new account or link to an existing account
+                    roleNames = ['ROLE_ACCTADMIN'] //#A list of role names that should be automatically granted to an OAuth User. The roles will be created if they do not exist
+                }
+            }
+
             securityConfigType = "InterceptUrlMap"  // <1>
             filterChain {
                 chainMap = [
@@ -59,6 +67,10 @@ grails {
                     [pattern: '/*/show/*',              access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER']],
                     [pattern: '/api/login',             access: ['ROLE_ANONYMOUS']], // <7>
                     [pattern: '/oauth/access_token',    access: ['ROLE_ANONYMOUS']], // <8>
+                    [pattern: '/oauth2/facebook/**',    access: ['ROLE_ANONYMOUS']],
+                    [pattern: '/oauth2/ask',    access: ['ROLE_ANONYMOUS']],
+                    [pattern: '/oauth2/createaccount',    access: ['ROLE_ANONYMOUS']],
+                    [pattern: '/oauth2/createaccount',    access: ['ROLE_ACCOUNTADMIN'], httpMethod: 'GET'],
                     [pattern: '/api/v1',                access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER'], httpMethod: 'GET'],  // <9>
                     [pattern: '/api/v1/*',              access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER'], httpMethod: 'GET'],
                     [pattern: '/api/v1/*',              access: ['ROLE_ACCOUNTADMIN'], httpMethod: 'DELETE'],
@@ -92,3 +104,8 @@ swagger {
 grails.plugin.springsecurity.ui.register.requireEmailValidation = false
 grails.plugin.springsecurity.postRegisterURL.defaultTargetUrl = '/uerInfo/show/0'
 grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_ACCOUNTADMIN']
+
+
+// Added by the Spring Security OAuth2 Google Plugin:
+grails.plugin.springsecurity.oauth2.domainClass = 'org.spring.security.OAuthID'
+grails.plugin.springsecurity.oauth2.registration.roleNames = ['ROLE_ACCOUNTADMIN']

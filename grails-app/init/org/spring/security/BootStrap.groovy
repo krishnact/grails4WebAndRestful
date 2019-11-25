@@ -4,16 +4,38 @@ import grails.compiler.GrailsCompileStatic
 
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
+import org.h2.tools.Server
+import org.springframework.beans.factory.annotation.Value
 
 @GrailsCompileStatic
 class BootStrap {
 
     //AnnouncementService announcementService
+    Server tcpServer;
+    Server webServer;
+    @Value('${dataSource.url}')
+    String databaseURL
+
+    /**
+     * Define this value as environment.development.app.h2dbArgs
+     */
+    @Value('${app.h2dbArgs}')
+    String h2dbArgs;
+
 
     def init = { servletContext ->
+        startH2DB(h2dbArgs.split(/\s+/))
         populateData();
     }
 
+    private void startH2DB(String[] args){
+
+        log.info "Starting H2 DB with arguments: ${args}"
+        Thread.start {
+            Server.main(args)
+            log.info("JDBC URL : ${databaseURL}")
+        }
+    }
 
     private void populateData(){
 

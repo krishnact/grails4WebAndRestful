@@ -33,10 +33,11 @@ grails:
             accept:
                 header:
                     userAgents:
-                        - Gecko
-                        - WebKit
-                        - Presto
-                        - Trident
+                      - Disabling_These_Agents_Else_SwaggerUI_Does_not_Work
+                      - XXX_Gecko
+                      - XXX_WebKit
+                      - XXX_Presto
+                      - XXX_Trident
         types:
             all: '*/*'
             atom: application/atom+xml
@@ -101,10 +102,26 @@ environments:
         dataSource:
             dbCreate: create-drop
             url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+        app:
+          h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+        grails:
+            plugin:
+                springsecurity:
+                    oauth2:
+                        providers:
+                            facebook:
+                                api_key: '1007457236270312'               #needed
+                                api_secret: 'd03bfc6fedf4b5f708872edfc7b962d2'         #needed
+                                successUri: "/oauth2/facebook/success"    #optional
+                                failureUri: "/oauth2/facebook/failure"    #optional
+                                callback: "/oauth2/facebook/callback"     #optional
     test:
         dataSource:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+        app:
+          h2dbArgs: "-tcp -tcpAllowOthers"
+
     production:
         dataSource:
             dbCreate: none
@@ -127,3 +144,6 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+        app:
+          h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+

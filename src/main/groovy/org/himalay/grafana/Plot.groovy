@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory
 class Plot {
     public static Logger logger = LoggerFactory.getLogger(Plot.class)
     private Map panelDef_
+    private Map plotlyDef;
     String header = 'Overwrite in plot json file';
     String footer = "Created on ${new Date()}";
     String id   = UUID.randomUUID().toString().replaceAll('-','')
@@ -26,7 +27,16 @@ class Plot {
             header = panelDef_.header
         }
 
+        if (panelDef_.plotlyChartDef != null){
+            PlotlyChart pc = new PlotlyChart();
+            File htmlFile = new File(jsonDefFile.parentFile,panelDef_.plotlyChartDef)
+            pc.readHtmlFile(htmlFile)
+            this.plotlyDef = pc.plotDefinition;
+        }else{
+            this.plotlyDef =[data:[:]]
+        }
     }
+
     /**
      *
      * @param timeRange
@@ -83,4 +93,8 @@ class Plot {
         return new JsonBuilder(this.panelDef_).toPrettyString();
     }
 
+    String getPlotelyDefJson(){
+        String retVal = new JsonBuilder(this.plotlyDef).toPrettyString();
+        return retVal;
+    }
 }

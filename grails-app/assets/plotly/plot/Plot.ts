@@ -82,6 +82,85 @@ class Plot{
     processOneResult(oneResult: Object, plotlyPlotDef: Object, panelDef: Object){//}, data: Array<Object>){
         if ( oneResult['series'] ){
             let row = 0;
+            let newData = []
+            oneResult['series'].forEach(function(oneSeries){
+                var idx = 0;
+                let timeData = oneSeries.values.map(obj => new Date(obj[0]))
+                plotlyPlotDef['data'].forEach(function(dataOrig){
+                        let data = JSON.parse(JSON.stringify(dataOrig))
+                        idx++;
+                        if (data.type == 'scatter') {
+                            let colName = oneSeries.columns[idx]
+                            if (colName != null) {
+                                var colVal = oneSeries.values[0][idx];
+                                let traces = panelDef['traces'];
+                                if (traces == null){
+                                    traces = {};
+                                }
+                                let trace = traces[colName]
+                                if (trace == null){
+                                    trace = {
+                                        "label": "{{#tagValues}}{{.}} {{/tagValues}} {{colName}}"
+                                    }
+                                }
+                                let tagKeys   =  (oneSeries.tags==null)? []:Object.keys(oneSeries.tags);
+                                let tagValues = tagKeys.map(key => oneSeries.tags[key] )
+
+                                let tmpTrace = {
+                                    tags: oneSeries.tags,
+                                    tagValues: tagValues,
+                                    tagKeys: tagKeys,
+                                    label: Mustache.render(trace.label, {
+                                        tags: oneSeries.tags,
+                                        tagValues: tagValues,
+                                        tagKeys: tagKeys,
+                                        trace: trace,
+                                        value: colVal,
+                                        colName: colName
+                                    }),
+                                    value: colVal
+                                }
+
+                                data.name = tmpTrace.label
+                                data.x = timeData
+                                data.y = oneSeries.values.map(function (obj) {
+                                    return obj[idx];
+                                });
+                                newData.push(data)
+                            }
+                        }else if(data.type == 'pie'){
+                                if (newData.length> idx -1){
+                                    data = newData[idx-1]
+                                }else{
+                                    newData.push(data)
+                                }
+                                let colName = oneSeries.columns[idx]
+                                var colVal = oneSeries.values[0][idx];
+                                let trace = panelDef['traces'][colName]
+                                let tmpTrace = {
+                                    tags: oneSeries.tags,
+                                    label: Mustache.render(trace.label, {tags: oneSeries.tags, trace: trace, value: colVal}),
+                                    value : colVal
+                                }
+
+                                let diaplayVal  = Mustache.render(trace.value, {tags: oneSeries.tags, trace: tmpTrace})
+
+                                data['labels'][row] = tmpTrace.label
+                                data['values'][row] = diaplayVal
+
+                        }
+                        row++;
+                    }
+                )
+
+            })
+            plotlyPlotDef['data']= newData
+        }
+    }
+
+    processOneResult_Pie(oneResult: Object, plotlyPlotDef: Object, panelDef: Object){//}, data: Array<Object>){
+        if ( oneResult['series'] ){
+            let row = 0;
             oneResult['series'].forEach(function(oneSeries){
                     let timeData = oneSeries.values.map(obj => new Date(obj[0]))
                     for (var idx=1; idx < oneSeries.columns.length; idx++){
@@ -96,8 +175,13 @@ class Plot{
 
                         let diaplayVal  = Mustache.render(trace.value, {tags: oneSeries.tags, trace: tmpTrace})
                         let data = plotlyPlotDef['data'][idx-1]
-                        data['labels'][row]= tmpTrace.label
-                        data['values'][row]= diaplayVal
+                        if (data.type =='scatter'){
+
+                        }else {
+
+                        }
+                        data['labels'][row] = tmpTrace.label
+                        data['values'][row] = diaplayVal
                     }
                 row++;
                 }

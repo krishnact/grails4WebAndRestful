@@ -14,15 +14,15 @@
     </title>
 
     <!-- Custom fonts for this template
-	<link href="/currentTheme/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
+	<link href="/sbadmin2/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
 	-->
-    <asset:stylesheet src="/currentTheme/vendor/fontawesome-free/css/all.css"/>
+    <asset:stylesheet src="/sbadmin2/vendor/fontawesome-free/css/all.css"/>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template
-	<link href="/currentTheme/css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 	-->
-    <asset:stylesheet src="/currentTheme/css/sb-admin-2.min.css"/>
+    <asset:stylesheet src="/sbadmin2/css/sb-admin-2.min.css"/>
     <g:layoutHead/>
 </head>
 
@@ -347,26 +347,26 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<asset:javascript src="/currentTheme/vendor/jquery/jquery.min.js"></asset:javascript>
-<asset:javascript src="/currentTheme/vendor/bootstrap/js/bootstrap.bundle.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/jquery/jquery.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></asset:javascript>
 
 <!-- Core plugin JavaScript-->
-<asset:javascript src="/currentTheme/vendor/jquery-easing/jquery.easing.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></asset:javascript>
 
 <!-- Custom scripts for all pages-->
-<asset:javascript src="/currentTheme/js/sb-admin-2.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/js/sb-admin-2.min.js"></asset:javascript>
 
 </body>
 
 <!-- Bootstrap core JavaScript-->
-<asset:javascript src="/currentTheme/vendor/jquery/jquery.min.js"></asset:javascript>
-<asset:javascript src="/currentTheme/vendor/bootstrap/js/bootstrap.bundle.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/jquery/jquery.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></asset:javascript>
 
 <!-- Core plugin JavaScript-->
-<asset:javascript src="/currentTheme/vendor/jquery-easing/jquery.easing.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></asset:javascript>
 
 <!-- Custom scripts for all pages-->
-<asset:javascript src="/currentTheme/js/sb-admin-2.min.js"></asset:javascript>
+<asset:javascript src="/sbadmin2/js/sb-admin-2.min.js"></asset:javascript>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <asset:javascript src="mustache.min.js"></asset:javascript>
 <asset:javascript src="/plot/Plot.ts"></asset:javascript>

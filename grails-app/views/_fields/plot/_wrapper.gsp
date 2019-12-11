@@ -3,7 +3,20 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">${value.header}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">
+            ${value.header}
+            <button type="button" class="btn btn-block btn-default" onclick="editThisPlot_${value.id}()">Edit this plot</button>
+            <script>
+                function editThisPlot_${value.id}(){
+                    let data =  window['plotly_data_${value.id}'];
+                    // Submit this data for saving
+
+                    // Now open a new tab with React Plot Editor
+
+
+                }
+            </script>
+        </h6>
     </div>
     <div class="card-body">
         <div id="${value.id}_">
@@ -38,7 +51,8 @@
                             %{--    config:{responsive: true, displaylogo: false}--}%
                             %{--});--}%
 
-                            let plot = Plotly.newPlot('${value.id}',plotlyPlotDef);
+                            let plot = Plotly.newPlot('${value.id}',plotlyPlotDef);//,{responsive: true, displaylogo: false});
+                            window['plotly_data_${value.id}'] = data
 
                         }
                     );

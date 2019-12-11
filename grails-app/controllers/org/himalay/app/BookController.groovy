@@ -148,6 +148,7 @@ class BookController extends RestfulController{
         if(handleReadOnly()) {
             return
         }
+
         def instance = createResource()
 
         instance.validate()

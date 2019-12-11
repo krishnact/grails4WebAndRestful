@@ -10,14 +10,13 @@ class OperatorController {
     def dashboard(){
         //String id = 'Panel1'
         File plots = new File('conf/resources/panels/')
-//        def files = ['Doughnut.json','Panel1.json'].collect{
-//            new File(plots, it)
-//        }
+        File templatesFolder = new File('conf/resources/chartTemplates')
+
         def files = plots.listFiles().findAll{
             it.name.endsWith('.json') //and it.name.startsWith('D')
         }
         def panels = files.collectEntries{
-            [it.name, new Bean<Plot>(new Plot(it))]
+            [it.name, new Bean<Plot>(new Plot(it,templatesFolder))]
         }
 
 

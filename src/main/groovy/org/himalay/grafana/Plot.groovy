@@ -10,44 +10,63 @@ class Plot {
     public static Logger logger = LoggerFactory.getLogger(Plot.class)
     private Map panelDef_
     private Map plotlyDef;
-    String header = 'Overwrite in plot json file';
+    String header = 'Overwrite "header" in plot json';
     String footer = "Created on ${new Date()}";
     String id   = UUID.randomUUID().toString().replaceAll('-','')
     String dbServerURL = 'http://127.0.0.1:8086';
-    File jsonDefFile ;
-    Plot(String panelDefJsFilePath){
-       this(new File(panelDefJsFilePath));
-    }
-
-    Plot(File panelDefJsFile){
-        this.jsonDefFile = panelDefJsFile;
+    File templatesFolder ;
+    Plot(String panelDefJs, File penalTemplatesFolder){
+        this.templatesFolder = penalTemplatesFolder
         JsonSlurper jsl = new JsonSlurper();
-        panelDef_ =jsl.parse(panelDefJsFile)
+        panelDef_ =jsl.parseText(panelDefJs)
         if ( panelDef_.header != null){
             header = panelDef_.header
         }
 
+        def defaultValues = ['title':'','anotherDefaultProperty':''];
+        defaultValues.each{String key, Object value->
+            if (panelDef_[key] == null){
+                panelDef_[key] = value;
+            }
+        }
+
         if (panelDef_.plotlyChartDef != null){
             PlotlyChart pc = new PlotlyChart();
-            File htmlFile = new File(jsonDefFile.parentFile,panelDef_.plotlyChartDef)
+            File htmlFile = new File(templatesFolder,panelDef_.plotlyChartDef)
             pc.readHtmlFile(htmlFile)
-            this.plotlyDef = pc.plotDefinition;
+            String plotlyDefAsJson = pc.chartDefAsJSON();
+            SimpleTemplateEngine ste = new SimpleTemplateEngine();
+            plotlyDefAsJson = ste.createTemplate(plotlyDefAsJson).make([plot: this, panel: panelDef_])
+            this.plotlyDef = jsl.parseText(plotlyDefAsJson)
         }else{
             this.plotlyDef =[data:[:]]
         }
     }
 
+    Plot(File panelDefJsFile, File templatesFolder){
+        this(panelDefJsFile.text,templatesFolder) ;
+        this.header = header +' file: '+panelDefJsFile.name
+    }
+
+    Map defaultQueryCriteria(){
+        return [startTime : 'now() - 1h', endTime : "now()", interval : '60s']
+    }
+
+    String influxQuery(){
+        return influxQuery(defaultQueryCriteria())
+    }
     /**
      *
      * @param timeRange
      * @param interval
      * @return
      */
-    String influxQuery(String timeRange = 'time >= now() - 1h', String interval = 'time(60s)', Map<String, Object> bindings= [:]){
+    String influxQuery(Map<String, Object> bindings){
         SimpleTemplateEngine ste = new SimpleTemplateEngine()
-        bindings['__timeRange'] = timeRange
-        bindings['__interval']  = interval
-
+        bindings['__timeRange'] = "time >= ${bindings.startTime} and time < ${bindings.endTime}"
+        bindings['__interval']  = "time(${bindings.interval})"
+        bindings['dashboardTime'] = bindings.startTime
+        bindings['interval'] = bindings.interval
         String selectQuery = panelDef_.selectQuery;
         if (selectQuery == null) {
 
@@ -60,6 +79,7 @@ class Plot {
             String fill = panelDef_.fill
             selectQuery = ste.createTemplate("Select ${columns} from ${from} where ${where} group By ${groupBy} ${fill}").make(bindings)
         }else{
+            selectQuery = selectQuery.replaceAll(/:([\w_]+):/,'\\${$1}')
             selectQuery = ste.createTemplate(selectQuery).make(bindings);
         }
 
@@ -67,8 +87,18 @@ class Plot {
     }
 
 
-
     void findLayout() {
+
+    }
+    void findLayout_() {
+
+            SimpleTemplateEngine ste = new SimpleTemplateEngine();
+            layoutJson = ste.createTemplate(layoutJson).make([plot: this, panel: panelDef_])
+            panelDef_.layout = jsl.parseText(layoutJson)
+
+    }
+
+    void findLayout_old() {
         if (panelDef_.layout.toString().startsWith('file://')) {
             JsonSlurper jsl = new JsonSlurper();
             String fileName = panelDef_.layout.toString().substring(7);

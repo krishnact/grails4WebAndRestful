@@ -146,4 +146,5 @@ environments:
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
         app:
           h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+          plotsFolder: "conf/resources/plotlyEditor"
 

@@ -1,0 +1,10 @@
+{
+  "plotType": "timeSeries",
+  "baseMock": "TimeSeries.json",
+  "selectQuery": "SELECT mean(\"usage_user\") AS \"mean_usage_user\" FROM \"telegraf\".\"autogen\".\"cpu\" WHERE $__timeRange GROUP BY $__interval, \"cpu\" FILL(null)",
+  "traces":{
+    "mean_usage_user": {
+      "label": "{{tags.cpu}}"
+    }
+  }
+}

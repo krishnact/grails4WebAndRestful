@@ -14,13 +14,12 @@
 	<!-- Outer Row -->
 	<div class="row justify-content-center">
 
-		<div class="col-xl-10 col-lg-12 col-md-9 login-window">
+		<div class="col-xl-10 col-lg-12 col-md-9">
 
 			<div class="card o-hidden border-0 shadow-lg my-5">
 				<div class="card-body p-0">
 					<!-- Nested Row within Card Body -->
 					<div class="row">
-
 						<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
 						<div class="col-lg-6">
 							<div class="p-5">
@@ -47,12 +46,11 @@
 									<a href="index.html" class="btn btn-google btn-user btn-block">
 										<i class="fab fa-google fa-fw"></i> Login with Google
 									</a>
-
+									-->
 
 									<a href="https://www.facebook.com/v5.0/dialog/oauth?client_id=1007457236270312&redirect_uri=http://localhost:8080/oauth2/facebook/callback&state=${Math.random()*10000}" class="btn btn-facebook btn-user btn-block">
 										<i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
 									</a>
-									-->
 
 								</s2ui:form>
 								<hr>

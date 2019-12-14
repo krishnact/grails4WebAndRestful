@@ -1,32 +1,37 @@
 {
   "data": [{
-    "hole": 0.39,
+    "hole": 0.25,
     "meta": {"columnNames": {"labels": "label", "values": "value"}},
-    "mode": "markers",
     "pull": 0,
     "sort": true,
     "type": "pie",
     "marker": {"line": {"width": 3}},
     "opacity": 0.75,
     "rotation": 1,
-    "labelssrc": "krishnact:4:e093d6",
     "labels": ["cpu1", "cpu2", "cpu3", "cpu4"],
-    "valuessrc": "krishnact:4:1b29f5",
     "values": ["22", "33", "20", "25"],
     "scalegroup": "",
-    "hovertemplate": ""
+    "hovertemplate": "",
+    "domain": {
+      "x": [
+        0.25,
+        0.75
+      ],
+      "y": [
+        0.25,
+        0.75
+      ]
+    }
   }, {
-    "hole": 0.82,
+    "hole": 0.75,
     "meta": {"columnNames": {"labels": "label", "values": "value2"}},
     "type": "pie",
     "opacity": 0.52,
-    "labelssrc": "krishnact:4:e093d6",
     "labels": ["cpu1", "cpu2", "cpu3", "cpu4"],
-    "valuessrc": "krishnact:4:cd9d2a",
     "values": ["10", "20", "30", "40"]
   }],
   "layout": {
-    "title": {"x": 0.16, "text": "${panel.title}"},
+    "title": {"x": 0.16, "text": "Doughnut chart"},
     "xaxis": {"range": [-1, 6], "autorange": true},
     "yaxis": {"range": [-1, 4], "autorange": true},
     "margin": {"l": 80},

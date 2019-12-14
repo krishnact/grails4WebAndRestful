@@ -4,11 +4,11 @@
   "selectQuery": "SELECT sum(\"usage_system\") as \"system_use\",sum(\"usage_user\") as \"user_use\" FROM \"autogen\".\"cpu\" WHERE (\"cpu\" != 'cpu-total') AND $__timeRange GROUP BY \"cpu\"",
   "traces": {
     "system_use": {
-      "label": "CPU {{tags.cpu}}",
+      "label": "sys {{tags.cpu}}",
       "value": "{{trace.value}}"
     },
     "user_use": {
-      "label": "{{tags.cpu}}",
+      "label": "usr {{tags.cpu}}",
       "value": "{{trace.value}}"
     }
   }

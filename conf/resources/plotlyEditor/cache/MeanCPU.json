@@ -582,7 +582,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "lines",
+      "mode": "markers+lines",
       "name": "cpu-total",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -722,7 +722,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu0",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -863,7 +863,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu1",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1004,7 +1004,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu10",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1145,7 +1145,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu11",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1286,7 +1286,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu12",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1427,7 +1427,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu13",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1568,7 +1568,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu14",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1709,7 +1709,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu15",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1850,7 +1850,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu2",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -1991,7 +1991,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu3",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2132,7 +2132,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu4",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2273,7 +2273,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu5",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2414,7 +2414,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu6",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2555,7 +2555,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu7",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2696,7 +2696,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu8",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",
@@ -2837,7 +2837,7 @@
           "y": "10 Min Sampled Avg"
         }
       },
-      "mode": "markers+lines",
+      "mode": "lines",
       "name": "cpu9",
       "type": "scatter",
       "xsrc": "krishnact:6:5daff0",

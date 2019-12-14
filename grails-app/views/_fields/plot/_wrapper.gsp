@@ -8,10 +8,28 @@
             <button type="button" class="btn btn-block btn-default" onclick="editThisPlot_${value.id}()">Edit this plot</button>
             <script>
                 function editThisPlot_${value.id}(){
-                    let data =  window['plotly_data_${value.id}'];
+                    let plotlyPlotDef =  window['plotly_data_${value.id}'];
                     // Submit this data for saving
+                    fetch('/api/v1/plotlyChart/${value.plotName}',
+                        {
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            method: "PUT",
+                            body: JSON.stringify(plotlyPlotDef)
+                        }).then(function(res){
+                                console.log(res)
+                                // Now open a new tab with React Plot Editor
+                                let plotlyEditor = '${value.plotlyEditor}';
+                                let plotName = '${value.plotName}';
+                                let plotURL ='${value.serverBase}'+'/api/v1/plotlyChart/'+plotName;
+                                let url = plotlyEditor+'/?plotName='+plotName+'&url='+plotURL
+                                var win = window.open(url, '_blank');
+                                win.focus();
+                            }
+                        ).catch(function(res){ console.log(res) })
 
-                    // Now open a new tab with React Plot Editor
 
 
                 }
@@ -30,7 +48,7 @@
                     //console.log(panelDef);
                     var panel = JSON.parse(panelDef)
                     var plotlyPlotDef = JSON.parse(window.atob('${value.getPlotelyDefJson().encodeAsBase64()}'));
-                    let myPlot = new Plot(plotlyPlotDef);
+                    let myPlot = new Plot(panel);
                     //myPlot.setDatabase('${value.dbServerURL}', 'telegraf')
                     myPlot.setDatabase('http://192.168.11.207:8086', 'telegraf')
                     let data = [];
@@ -52,7 +70,7 @@
                             %{--});--}%
 
                             let plot = Plotly.newPlot('${value.id}',plotlyPlotDef);//,{responsive: true, displaylogo: false});
-                            window['plotly_data_${value.id}'] = data
+                            window['plotly_data_${value.id}'] = plotlyPlotDef
 
                         }
                     );

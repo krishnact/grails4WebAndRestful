@@ -25,6 +25,7 @@ grails {
             filterChain {
                 chainMap = [
                 [pattern: '/api/v1/public/**', filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'],
+                [pattern: '/api/v1/plotlyChart/**', filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'],
                 [pattern: '/api/**',filters: 'JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'],// <2>
                 [pattern: '/**', filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'] // <3>
                 ]
@@ -71,6 +72,9 @@ grails {
                     [pattern: '/oauth2/ask',    access: ['ROLE_ANONYMOUS']],
                     [pattern: '/oauth2/createaccount',    access: ['ROLE_ANONYMOUS']],
                     [pattern: '/oauth2/createaccount',    access: ['ROLE_ACCOUNTADMIN'], httpMethod: 'GET'],
+                    [pattern: '/api/v1/plotlyChart/',           access: ['permitAll','ROLE_ANONYMOUS'], httpMethod: 'GET'],
+                    [pattern: '/api/v1/plotlyChart/**',        access: ['permitAll','ROLE_ANONYMOUS'], httpMethod: 'GET'],
+                    [pattern: '/api/v1/plotlyChart/**',        access: ['permitAll','ROLE_ANONYMOUS'], httpMethod: 'PUT'],
                     [pattern: '/api/v1',                access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER'], httpMethod: 'GET'],  // <9>
                     [pattern: '/api/v1/*',              access: ['ROLE_ACCOUNTADMIN', 'ROLE_ACCOUNTUSER'], httpMethod: 'GET'],
                     [pattern: '/api/v1/*',              access: ['ROLE_ACCOUNTADMIN'], httpMethod: 'DELETE'],

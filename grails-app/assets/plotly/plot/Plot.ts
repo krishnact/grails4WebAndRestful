@@ -1,8 +1,14 @@
 class Plot{
-    plotType: string
+    plotDef: any
+    dataKeys = {timeSeries: "{{#tagValues}}{{.}} {{/tagValues}}", pie: '{{colName}}'}
 
-    constructor (plotType: string){
-        this.plotType = plotType
+    constructor (plotDef: any){
+        this.plotDef = plotDef
+    }
+
+    getDataKey(model: any){
+        let dataKeyTemplate = this.dataKeys[this.plotDef.plotType]
+        return Mustache.render(dataKeyTemplate,model);
     }
     /**
      * Database URL
@@ -79,7 +85,110 @@ class Plot{
 
     }
 
+    processPie(oneSeries: any, idx: number , panelDef : any, data: any, timeData: Date, tmpTrace : any, row: number){
+
+        let colName = oneSeries.columns[idx]
+        var colVal = oneSeries.values[0][idx];
+        let trace = panelDef['traces'][colName]
+        tmpTrace = {
+            tags: oneSeries.tags,
+            label: Mustache.render(trace.label, {tags: oneSeries.tags, trace: trace, value: colVal}),
+            value : colVal
+        }
+
+        let diaplayVal  = Mustache.render(trace.value, {tags: oneSeries.tags, trace: tmpTrace})
+
+        data['labels'].push(tmpTrace.label)
+        data['values'].push( diaplayVal)
+    }
+    processScatter(oneSeries: any, idx: number , panelDef : any, data: any,  timeData: Date, tmpTrace : any, row: number){
+        let colName = oneSeries.columns[idx]
+        if (colName != null) {
+            var colVal = oneSeries.values[0][idx];
+            //data.name = tmpTrace.label
+            data.x = timeData
+            data.y = oneSeries.values.map(function (obj) {
+                return obj[idx];
+            });
+            //newData.push(data)
+        }
+
+    }
+
     processOneResult(oneResult: Object, plotlyPlotDef: Object, panelDef: Object){//}, data: Array<Object>){
+        var _this = this;
+        if ( oneResult['series'] ){
+            let row = 0;
+            let newData = {}
+            let columnNameDataMap = {};
+            plotlyPlotDef['data'].forEach(function(dataOrig){
+                columnNameDataMap[dataOrig['dataKey']] = dataOrig
+            });
+            oneResult['series'].forEach(function(oneSeries){
+                var idx = 0;
+                let timeData = oneSeries.values.map(obj => new Date(obj[0]))
+
+                for (let idx=1; idx < oneSeries.columns.length; idx++){
+                    let colName = oneSeries.columns[idx]
+                        let traces = panelDef['traces'];
+                        if (traces == null){
+                            traces = {};
+                        }
+                        let trace = traces[colName]
+                        if (trace == null){
+                            trace = {
+                                "label": "{{#tagValues}}{{.}} {{/tagValues}} {{colName}}"
+                            }
+                        }
+                        let tagKeys   =  (oneSeries.tags==null)? []:Object.keys(oneSeries.tags);
+                        let tagValues = tagKeys.map(key => oneSeries.tags[key] )
+
+                        let tmpTrace = {
+                            tags: oneSeries.tags,
+                            tagValues: tagValues,
+                            tagKeys: tagKeys,
+                            label: Mustache.render(trace.label, {
+                                tags: oneSeries.tags,
+                                tagValues: tagValues,
+                                tagKeys: tagKeys,
+                                trace: trace,
+                                colName: colName
+                            }),
+                        }
+                        let dataKey = _this.getDataKey({tagValues: tagValues, colName: colName})
+                        let data = newData[dataKey];
+                        if(data == null){
+                            data = columnNameDataMap[dataKey];
+                            if (data == null){
+                                data = JSON.parse(JSON.stringify(plotlyPlotDef['data'][0]));
+
+                            }else{
+
+                            }
+                            if (data.type == 'scatter') {
+
+                            }else if(data.type == 'pie'){
+                                data.values = []
+                                data.labels = []
+                            }
+                            newData[dataKey] = data
+                        }
+
+                        if (data.type == 'scatter') {
+                            data['dataKey'] = dataKey;
+                            _this.processScatter(oneSeries, idx, panelDef , data, timeData, tmpTrace, row);
+                        }else if(data.type == 'pie'){
+                            data['dataKey'] = dataKey;
+                            _this.processPie(oneSeries, idx, panelDef , data,  timeData, tmpTrace, row);
+                        }
+                        row++;
+                    }
+            })
+            plotlyPlotDef['data']= Object.keys(newData).map(key => newData[key] )
+        }
+    }
+
+    processOneResult_good(oneResult: Object, plotlyPlotDef: Object, panelDef: Object){//}, data: Array<Object>){
         if ( oneResult['series'] ){
             let row = 0;
             let newData = []

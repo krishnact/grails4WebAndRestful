@@ -8,10 +8,14 @@ class UrlMappings {
          * Example of a general CRUD API
          */
         "/api/v1/book/$id"(controller: 'book', action: "show", method: "GET")
-        "/api/v1/book/"(action: "index", method: "GET")
-        "/api/v1/book/"(action: "save", method: "POST")
-        "/api/v1/book/$id"(action: "update", method: "PUT")
-        "/api/v1/book/$id"(action: "delete", method: "DELETE")
+        "/api/v1/book/"(controller: 'book', action: "index", method: "GET")
+        "/api/v1/book/"(controller: 'book', action: "save", method: "POST")
+        "/api/v1/book/$id"(controller:  'book', action: "update", method: "PUT")
+        "/api/v1/book/$id"(controller: 'book', action: "delete", method: "DELETE")
+
+        "/api/v1/plotlyChart/$id"(controller: 'plotlyChart', action: "show", method: "GET")
+        "/api/v1/plotlyChart/"(controller: 'plotlyChart', action: "index", method: "GET")
+        "/api/v1/plotlyChart/$id"(controller: 'plotlyChart', action: "update", method: "PUT")
 
 /**
         "/api/v1/$controller/$id"(action: "show", method: "GET")

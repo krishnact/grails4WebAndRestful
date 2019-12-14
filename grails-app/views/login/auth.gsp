@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-	<meta name="layout" content="sbadmin2-island">
+	<meta name="layout" content="adminLTE-island">
 	<title>SB Admin 2 - Login</title>
 </head>
 
@@ -46,11 +46,12 @@
 									<a href="index.html" class="btn btn-google btn-user btn-block">
 										<i class="fab fa-google fa-fw"></i> Login with Google
 									</a>
-									-->
+
 
 									<a href="https://www.facebook.com/v5.0/dialog/oauth?client_id=1007457236270312&redirect_uri=http://localhost:8080/oauth2/facebook/callback&state=${Math.random()*10000}" class="btn btn-facebook btn-user btn-block">
 										<i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
 									</a>
+									-->
 
 								</s2ui:form>
 								<hr>

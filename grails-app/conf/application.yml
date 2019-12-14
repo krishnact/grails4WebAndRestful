@@ -1,5 +1,7 @@
 ---
 grails:
+    cors:
+        enabled: true
     profile: web
     codegen:
         defaultPackage: example.grails
@@ -103,7 +105,10 @@ environments:
             dbCreate: create-drop
             url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
         app:
-          h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+           h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+           plotlyPlotsMocks: "conf/resources/plotlyEditor/mocks"
+           plotlyPlotsCache: "conf/resources/plotlyEditor/cache"
+           plotlyEditor : http://192.168.11.207:3000
         grails:
             plugin:
                 springsecurity:
@@ -115,12 +120,16 @@ environments:
                                 successUri: "/oauth2/facebook/success"    #optional
                                 failureUri: "/oauth2/facebook/failure"    #optional
                                 callback: "/oauth2/facebook/callback"     #optional
+
     test:
         dataSource:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
         app:
-          h2dbArgs: "-tcp -tcpAllowOthers"
+            h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+            plotlyPlotsMocks: "conf/resources/plotlyEditor/mocks"
+            plotlyPlotsCache: "conf/resources/plotlyEditor/cache"
+            plotlyEditor : http://192.168.11.207:3000
 
     production:
         dataSource:
@@ -145,6 +154,8 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
         app:
-          h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
-          plotsFolder: "conf/resources/plotlyEditor"
+            h2dbArgs: "-tcp -tcpAllowOthers -web -browser"
+            plotlyPlotsMocks: "conf/resources/plotlyEditor/mocks"
+            plotlyPlotsCache: "conf/resources/plotlyEditor/cache"
+            plotlyEditor : http://192.168.11.207:3000
 

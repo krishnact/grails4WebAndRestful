@@ -2,10 +2,14 @@ package org.himalay.grafana
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
+import groovy.text.GStringTemplateEngine
 import groovy.text.SimpleTemplateEngine
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * This class represents a Plotly plot created by using a mock and data.
+ */
 class Plot {
     public static Logger logger = LoggerFactory.getLogger(Plot.class)
     private Map panelDef_
@@ -14,11 +18,19 @@ class Plot {
     String footer = "Created on ${new Date()}";
     String id   = UUID.randomUUID().toString().replaceAll('-','')
     String dbServerURL = 'http://127.0.0.1:8086';
-    File templatesFolder ;
-    Plot(String panelDefJs, File penalTemplatesFolder){
-        this.templatesFolder = penalTemplatesFolder
+    String plotName = null;
+    String serverBase
+    String plotlyEditor
+    /**
+     *
+     * @param myPlotDefFile The JSON defining plot columns and SQL
+     * @param mocksFolder The folder that contains panel definitions.
+     * @param plotsCacheFolder The folder that contains panel cache.
+     */
+    Plot(File myPlotDefFile, File mocksFolder, File plotsCacheFolder){
+        plotName = myPlotDefFile.name;
         JsonSlurper jsl = new JsonSlurper();
-        panelDef_ =jsl.parseText(panelDefJs)
+        panelDef_ =jsl.parse(myPlotDefFile)
         if ( panelDef_.header != null){
             header = panelDef_.header
         }
@@ -30,23 +42,23 @@ class Plot {
             }
         }
 
-        if (panelDef_.plotlyChartDef != null){
-            PlotlyChart pc = new PlotlyChart();
-            File htmlFile = new File(templatesFolder,panelDef_.plotlyChartDef)
-            pc.readHtmlFile(htmlFile)
-            String plotlyDefAsJson = pc.chartDefAsJSON();
-            SimpleTemplateEngine ste = new SimpleTemplateEngine();
-            plotlyDefAsJson = ste.createTemplate(plotlyDefAsJson).make([plot: this, panel: panelDef_])
-            this.plotlyDef = jsl.parseText(plotlyDefAsJson)
+        // Read the mock file
+        File myMock = new File(plotsCacheFolder, myPlotDefFile.name)
+        PlotlyChart pc = null;
+        if (myMock.exists()){
+            pc = new PlotlyChart(myMock );
         }else{
-            this.plotlyDef =[data:[:]]
+            pc = new PlotlyChart(new File(mocksFolder, panelDef_.baseMock) );
         }
+
+
+        String plotlyDefAsJson = pc.chartDefAsJSON();
+        GStringTemplateEngine ste = new GStringTemplateEngine();
+        //plotlyDefAsJson = ste.createTemplate(plotlyDefAsJson).make([plot: this, panel: panelDef_])
+        this.plotlyDef = jsl.parseText(plotlyDefAsJson)
+
     }
 
-    Plot(File panelDefJsFile, File templatesFolder){
-        this(panelDefJsFile.text,templatesFolder) ;
-        this.header = header +' file: '+panelDefJsFile.name
-    }
 
     Map defaultQueryCriteria(){
         return [startTime : 'now() - 1h', endTime : "now()", interval : '60s']

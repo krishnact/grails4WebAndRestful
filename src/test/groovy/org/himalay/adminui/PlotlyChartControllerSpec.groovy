@@ -3,7 +3,7 @@ package org.himalay.adminui
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class PlotlyChartController extends Specification implements ControllerUnitTest<PlotlyChartController> {
+class PlotlyChartControllerSpec extends Specification implements ControllerUnitTest<PlotlyChartController> {
 
     def setup() {
     }
